@@ -4,9 +4,9 @@ public class Game {
 
     private int score;
 
-    public int run(int frameScore) {
-        for (int i = 1; i <= 10; i++) {
-            score += scorePerFrame(frameScore);
+    public int run(int[] framesScore) {
+        for (int frameNumber = 0; frameNumber < 10; frameNumber++) {
+            score += scorePerFrame(framesScore[frameNumber]);
         }
         return score;
     }
