@@ -1,14 +1,14 @@
 package com.fleboulch.bowling.domain;
 
+import java.util.List;
+
 public class Game {
 
-    private int score;
+    public int run(List<Frame> frames) {
+        return frames.stream()
+                .mapToInt(Frame::score)
+                .sum();
 
-    public int run(Frame[] frames) {
-        for (Frame frame : frames) {
-            score += frame.score();
-        }
-        return score;
     }
 
 }

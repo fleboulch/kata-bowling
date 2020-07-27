@@ -4,10 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GameTest {
 
+    private static final int NB_FRAMES = 10;
     private Game game;
 
     @BeforeEach
@@ -34,12 +38,12 @@ class GameTest {
 
     }
 
-    private Frame[] buildScoreFrame(int first, int second) {
-        Frame[] result = new Frame[10];
-        for (int frameNumber = 0; frameNumber < 10; frameNumber++) {
-            result[frameNumber] = new Frame(first, second);
+    private List<Frame> buildScoreFrame(int first, int second) {
+        List<Frame> frames = new ArrayList<>();
+        for (int frameNumber = 0; frameNumber < NB_FRAMES; frameNumber++) {
+            frames.add(new Frame(first, second));
         }
-        return result;
+        return frames;
     }
 
 }
