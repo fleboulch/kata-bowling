@@ -1,11 +1,9 @@
 package com.fleboulch.bowling.domain;
 
-import java.util.List;
-
 public class Game {
 
-    public int run(List<Frame> frames) {
-        return frames.stream()
+    public int run(Frames frames) {
+        return frames.getFrames().stream()
                 .mapToInt(Frame::score)
                 .sum();
 

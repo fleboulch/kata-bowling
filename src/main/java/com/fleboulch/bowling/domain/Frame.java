@@ -12,7 +12,7 @@ public class Frame {
     private int nbPinHitOnSecondThrow;
 
     public boolean isStrike() {
-        return nbPinHitOnFirstThrow == 10;
+        return nbPinHitOnFirstThrow == NB_PINS;
     }
 
     public boolean isSpare() {
