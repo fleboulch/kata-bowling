@@ -2,6 +2,7 @@ package com.fleboulch.bowling.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,29 +17,27 @@ class GameTest {
 
     @Test
     void when_player_hits_no_pin_his_score_his_zero() {
-        int score = game.run(buildScoreFrame(0));
+        int score = game.run(buildScoreFrame(0, 0));
 
         assertThat(score).isZero();
     }
 
     @Test
     void when_player_hits_1_pin_per_frame_his_score_his_ten() {
-        int score = game.run(buildScoreFrame(1));
+        int score = game.run(buildScoreFrame(1, 0));
 
         assertThat(score).isEqualTo(10);
     }
 
     @Test
-    void when_player_hits_multiple_pin_per_frame_his_score_his_the_sum() {
-        int score = game.run(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+    void when_player_do_one_spare_score_should_be_correct() {
 
-        assertThat(score).isEqualTo(55);
     }
 
-    private int[] buildScoreFrame(int i) {
-        int[] result = new int[10];
+    private Frame[] buildScoreFrame(int first, int second) {
+        Frame[] result = new Frame[10];
         for (int frameNumber = 0; frameNumber < 10; frameNumber++) {
-            result[frameNumber] = i;
+            result[frameNumber] = new Frame(first, second);
         }
         return result;
     }

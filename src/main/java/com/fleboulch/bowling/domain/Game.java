@@ -4,14 +4,11 @@ public class Game {
 
     private int score;
 
-    public int run(int[] framesScore) {
-        for (int frameNumber = 0; frameNumber < 10; frameNumber++) {
-            score += scorePerFrame(framesScore[frameNumber]);
+    public int run(Frame[] frames) {
+        for (Frame frame : frames) {
+            score += frame.score();
         }
         return score;
     }
 
-    private int scorePerFrame(int nbPinHit) {
-        return nbPinHit;
-    }
 }
