@@ -2,7 +2,6 @@ package com.fleboulch.bowling.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,27 +20,40 @@ class GameTest {
 
     @Test
     void when_player_hits_no_pin_his_score_his_zero() {
-        int score = game.run(buildScoreFrame(0, 0));
+        int score = game.run(buildScoreFrame(new Frame(0, 0)));
 
         assertThat(score).isZero();
     }
 
     @Test
     void when_player_hits_1_pin_per_frame_his_score_his_ten() {
-        int score = game.run(buildScoreFrame(1, 0));
+        int score = game.run(buildScoreFrame(new Frame(1, 0)));
 
         assertThat(score).isEqualTo(10);
     }
 
     @Test
-    void when_player_do_one_spare_score_should_be_correct() {
+    void when_player_do_one_spare_and_first_ball_after_0_spare_should_have_no_effect() {
+        Frame zeroFrame = new Frame(0, 0);
+        Frame spare = new Frame(9, 1);
+        List<Frame> framesWithOneSpareAtTheBeginning = buildScoreWithOneSpareAtTheBeginning(spare, zeroFrame);
 
+        int score = game.run(framesWithOneSpareAtTheBeginning);
+
+        assertThat(score).isEqualTo(10);
     }
 
-    private List<Frame> buildScoreFrame(int first, int second) {
+    private List<Frame> buildScoreWithOneSpareAtTheBeginning(Frame spare, Frame otherFrames) {
+        List<Frame> frames = buildScoreFrame(otherFrames);
+        frames.add(0, spare);
+        frames.remove(10);
+        return frames;
+    }
+
+    private List<Frame> buildScoreFrame(Frame frame) {
         List<Frame> frames = new ArrayList<>();
         for (int frameNumber = 0; frameNumber < NB_FRAMES; frameNumber++) {
-            frames.add(new Frame(first, second));
+            frames.add(frame);
         }
         return frames;
     }
