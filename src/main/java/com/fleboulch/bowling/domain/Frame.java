@@ -19,7 +19,10 @@ public class Frame {
         return !isStrike() && (nbPinHitOnFirstThrow + nbPinHitOnSecondThrow == NB_PINS);
     }
 
-    public int score() {
+    public int score(Frame nextFrame) {
+        if (isSpare()) {
+            return  nbPinHitOnFirstThrow + nbPinHitOnSecondThrow + nextFrame.nbPinHitOnFirstThrow;
+        }
         return nbPinHitOnFirstThrow + nbPinHitOnSecondThrow;
     }
 }
