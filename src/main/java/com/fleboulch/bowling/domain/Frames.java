@@ -3,6 +3,7 @@ package com.fleboulch.bowling.domain;
 import lombok.Getter;
 
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 public class Frames {
@@ -11,8 +12,15 @@ public class Frames {
     private final List<Frame> frames;
 
     public Frames(List<Frame> frames) {
+
         this.frames = frames;
         checkValidNumberOfFrames();
+
+        for (int cpt = 1; cpt <= VALID_NUMBER_OF_FRAMES; cpt++) {
+            Frame tempFrame = frames.get(cpt - 1);
+            frames.set(cpt - 1, new Frame(tempFrame.getNbPinHitOnFirstThrow(), tempFrame.getNbPinHitOnSecondThrow(), cpt));
+        }
+
     }
 
     private void checkValidNumberOfFrames() {
@@ -21,10 +29,21 @@ public class Frames {
         }
     }
 
-    public Frame getFrameByIndex(int index) {
-        if (index < 0 || index >= VALID_NUMBER_OF_FRAMES) {
-            throw new UnknownFrameIndexException(index);
+    public Frame getFrameByNumero(int frameNumber) {
+        if (frameNumber < 1 || frameNumber > VALID_NUMBER_OF_FRAMES) {
+            throw new UnknownFrameIndexException(frameNumber);
         }
-        return frames.get(index);
+        return frames.get(frameNumber - 1);
+    }
+
+    public Optional<Frame> next(Frame frame) {
+        if (isLast(frame)) {
+            return Optional.empty();
+        }
+        return Optional.of(getFrameByNumero(frame.getNumber() +1));
+    }
+
+    private boolean isLast(Frame frame) {
+        return frame.getNumber() == VALID_NUMBER_OF_FRAMES;
     }
 }

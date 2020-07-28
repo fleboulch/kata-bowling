@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class FramesTest {
 
-    private static final Frame ZERO_FRAME = new Frame(0, 0);
+    private static final Frame ZERO_FRAME = new Frame(0, 0, 1);
     private static final int VALID_NUMBER_OF_FRAMES = 10;
     private static final int INVALID_NUMBER_OF_FRAMES = 20;
 
@@ -24,17 +24,24 @@ class FramesTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1, 10, 11})
+    @ValueSource(ints = {0, 11})
     void when_searching_unknown_frame_index_it_should_return_an_exception(int invalidFrameIndex) {
         Frames frames = buildFrames();
-        assertThatThrownBy(() -> frames.getFrameByIndex(invalidFrameIndex))
+        assertThatThrownBy(() -> frames.getFrameByNumero(invalidFrameIndex))
                 .isInstanceOf(UnknownFrameIndexException.class);
     }
 
     @Test
     void when_searching_first_frame_it_return_the_first_frame() {
         Frames frames = buildFrames();
-        assertThat(frames.getFrameByIndex(0)).isEqualTo(ZERO_FRAME);
+        assertThat(frames.getFrameByNumero(1)).isEqualTo(ZERO_FRAME);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 5, 7, 9})
+    void frame_is_not_last(int frameNumber) {
+        Frames frames = buildFrames();
+        assertThat(frames.next(frames.getFrameByNumero(frameNumber))).isNotEmpty();
     }
 
     private Frames buildInvalidFrames() {

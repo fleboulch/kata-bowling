@@ -8,6 +8,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class FrameTest {
 
+    private static final Frame SPARE_FRAME = new Frame(8, 2);
+
     @Test
     void its_a_strike() {
         Frame strike = buildFrame(10, 0);
@@ -38,8 +40,31 @@ class FrameTest {
 
     }
 
-    private Frame buildFrame(int firstThrow, int secondeThrow) {
-        return new Frame(firstThrow, secondeThrow);
+    @ParameterizedTest
+    @CsvSource({
+            "1, 2, 3",
+            "1, 8, 9",
+            "3, 4, 7"
+    })
+    void when_simple_frame_score_is_a_sum(int firstThrow, int secondThrow, int expectedScore) {
+        Frame frame = buildFrame(firstThrow, secondThrow);
+        Frame nextFrame = buildFrame(3, 4);
+        assertThat(frame.score(nextFrame)).isEqualTo(expectedScore);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "1, 11",
+            "3, 13",
+            "8, 18"
+    })
+    void when_frame_is_a_spare_next_first_ball_is_counted_twice(int nextFirstThrow, int expectedScore) {
+        Frame nextFrame = buildFrame(nextFirstThrow, 4);
+        assertThat(SPARE_FRAME.score(nextFrame)).isEqualTo(expectedScore);
+    }
+
+    private Frame buildFrame(int firstThrow, int secondThrow) {
+        return new Frame(firstThrow, secondThrow);
     }
 
 }
