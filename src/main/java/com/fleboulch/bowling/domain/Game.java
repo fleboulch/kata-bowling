@@ -10,7 +10,7 @@ public class Game {
     }
 
     private Frame nextFrame(Frames frames, Frame frame) {
-        return frames.next(frame)
+        return frames.getFrameByNumero(frame.getNumber() + 1)
                 .orElse(new Frame(0, 0, 0)); // TODO: TO FIX
     }
 

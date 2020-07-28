@@ -16,6 +16,7 @@ public class Frames {
         this.frames = frames;
         checkValidNumberOfFrames();
 
+        // TODO: use java 8 streams
         for (int cpt = 1; cpt <= VALID_NUMBER_OF_FRAMES; cpt++) {
             Frame tempFrame = frames.get(cpt - 1);
             frames.set(cpt - 1, new Frame(tempFrame.getNbPinHitOnFirstThrow(), tempFrame.getNbPinHitOnSecondThrow(), cpt));
@@ -29,21 +30,11 @@ public class Frames {
         }
     }
 
-    public Frame getFrameByNumero(int frameNumber) {
+    public Optional<Frame> getFrameByNumero(int frameNumber) {
         if (frameNumber < 1 || frameNumber > VALID_NUMBER_OF_FRAMES) {
-            throw new UnknownFrameIndexException(frameNumber);
-        }
-        return frames.get(frameNumber - 1);
-    }
-
-    public Optional<Frame> next(Frame frame) {
-        if (isLast(frame)) {
             return Optional.empty();
         }
-        return Optional.of(getFrameByNumero(frame.getNumber() +1));
+        return Optional.of(frames.get(frameNumber - 1));
     }
 
-    private boolean isLast(Frame frame) {
-        return frame.getNumber() == VALID_NUMBER_OF_FRAMES;
-    }
 }

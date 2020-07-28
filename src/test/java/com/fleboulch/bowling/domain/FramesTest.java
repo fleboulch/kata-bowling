@@ -25,23 +25,17 @@ class FramesTest {
 
     @ParameterizedTest
     @ValueSource(ints = {0, 11})
-    void when_searching_unknown_frame_index_it_should_return_an_exception(int invalidFrameIndex) {
+    void when_searching_unknown_frame_number_it_should_return_an_exception(int invalidFrameNumber) {
         Frames frames = buildFrames();
-        assertThatThrownBy(() -> frames.getFrameByNumero(invalidFrameIndex))
-                .isInstanceOf(UnknownFrameIndexException.class);
+
+        assertThat(frames.getFrameByNumero(invalidFrameNumber)).isEmpty();
+
     }
 
     @Test
     void when_searching_first_frame_it_return_the_first_frame() {
         Frames frames = buildFrames();
-        assertThat(frames.getFrameByNumero(1)).isEqualTo(ZERO_FRAME);
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 5, 7, 9})
-    void frame_is_not_last(int frameNumber) {
-        Frames frames = buildFrames();
-        assertThat(frames.next(frames.getFrameByNumero(frameNumber))).isNotEmpty();
+        assertThat(frames.getFrameByNumero(1)).contains(ZERO_FRAME);
     }
 
     private Frames buildInvalidFrames() {
