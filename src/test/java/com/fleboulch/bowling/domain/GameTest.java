@@ -66,4 +66,35 @@ class GameTest {
         assertThat(score).isEqualTo(30);
     }
 
+    @Test
+    void when_player_do_one_strike(
+            @FrameConfig(firstBall = 10)
+            @FrameConfig(firstBall = 3, secondBall = 4, number = 2) Frames framesWithTwoSpareAtTheBeginning
+    ) {
+        int score = game.run(framesWithTwoSpareAtTheBeginning);
+
+        assertThat(score).isEqualTo(24);
+    }
+
+    @Test
+    void when_player_do_two_strikes(
+            @FrameConfig(firstBall = 10)
+            @FrameConfig(firstBall = 10, number = 2) Frames framesWithTwoSpareAtTheBeginning
+    ) {
+        int score = game.run(framesWithTwoSpareAtTheBeginning);
+
+        assertThat(score).isEqualTo(30);
+    }
+
+    @Test
+    void when_player_do_three_strikes_in_a_row(
+            @FrameConfig(firstBall = 10)
+            @FrameConfig(firstBall = 10, number = 2)
+            @FrameConfig(firstBall = 10, number = 3) Frames framesWithTwoSpareAtTheBeginning
+    ) {
+        int score = game.run(framesWithTwoSpareAtTheBeginning);
+
+        assertThat(score).isEqualTo(60);
+    }
+
 }
