@@ -32,6 +32,8 @@ public class Frame {
     public int score(Frame nextFrame) {
         if (isSpare()) {
             return  nbPinHitOnFirstThrow + nbPinHitOnSecondThrow + nextFrame.nbPinHitOnFirstThrow;
+        } else if (isStrike()) {
+            return  nbPinHitOnFirstThrow + nbPinHitOnSecondThrow + nextFrame.nbPinHitOnFirstThrow + nextFrame.nbPinHitOnSecondThrow;
         }
         return nbPinHitOnFirstThrow + nbPinHitOnSecondThrow;
     }

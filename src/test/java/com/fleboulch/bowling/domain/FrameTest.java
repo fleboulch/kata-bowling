@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FrameTest {
 
     private static final Frame SPARE_FRAME = new Frame(8, 2);
+    private static final Frame STRIKE_FRAME = new Frame(10, 0);
 
     @Test
     void its_a_strike() {
@@ -58,9 +59,20 @@ class FrameTest {
             "3, 13",
             "8, 18"
     })
-    void when_frame_is_a_spare_next_first_ball_is_counted_twice(int nextFirstThrow, int expectedScore) {
+    void when_frame_is_a_spare_next_first_ball_is_counted(int nextFirstThrow, int expectedScore) {
         Frame nextFrame = buildFrame(nextFirstThrow, 4);
         assertThat(SPARE_FRAME.score(nextFrame)).isEqualTo(expectedScore);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "1, 1, 12",
+            "3, 2, 15",
+            "8, 1, 19"
+    })
+    void when_frame_is_a_strike_next_two_balls_are_counted(int nextFirstThrow, int nextSecondThrow, int expectedScore) {
+        Frame nextFrame = buildFrame(nextFirstThrow, nextSecondThrow);
+        assertThat(STRIKE_FRAME.score(nextFrame)).isEqualTo(expectedScore);
     }
 
     private Frame buildFrame(int firstThrow, int secondThrow) {
