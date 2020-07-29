@@ -26,16 +26,21 @@ public class Frame {
     }
 
     public boolean isSpare() {
-        return !isStrike() && (nbPinHitOnFirstThrow + nbPinHitOnSecondThrow == NB_PINS);
+        return !isStrike() && (sumTwoBalls(this) == NB_PINS);
     }
 
     public int score(Frame nextFrame) {
+        int scoreCurrentFrame = sumTwoBalls(this);
         if (isSpare()) {
-            return  nbPinHitOnFirstThrow + nbPinHitOnSecondThrow + nextFrame.nbPinHitOnFirstThrow;
+            return scoreCurrentFrame + nextFrame.nbPinHitOnFirstThrow;
         } else if (isStrike()) {
-            return  nbPinHitOnFirstThrow + nbPinHitOnSecondThrow + nextFrame.nbPinHitOnFirstThrow + nextFrame.nbPinHitOnSecondThrow;
+            return scoreCurrentFrame + sumTwoBalls(nextFrame);
         }
-        return nbPinHitOnFirstThrow + nbPinHitOnSecondThrow;
+        return scoreCurrentFrame;
+    }
+
+    private int sumTwoBalls(Frame frame) {
+        return frame.nbPinHitOnFirstThrow + frame.nbPinHitOnSecondThrow;
     }
 
     @Override
