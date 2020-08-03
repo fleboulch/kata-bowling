@@ -50,7 +50,7 @@ class FrameTest {
     void when_simple_frame_score_is_a_sum(int firstThrow, int secondThrow, int expectedScore) {
         Frame frame = buildFrame(firstThrow, secondThrow);
         Frame nextFrame = buildFrame(3, 4);
-        assertThat(frame.score(nextFrame)).isEqualTo(expectedScore);
+        assertThat(frame.score(nextFrame, null)).isEqualTo(expectedScore);
     }
 
     @ParameterizedTest
@@ -61,7 +61,7 @@ class FrameTest {
     })
     void when_frame_is_a_spare_next_first_ball_is_counted(int nextFirstThrow, int expectedScore) {
         Frame nextFrame = buildFrame(nextFirstThrow, 4);
-        assertThat(SPARE_FRAME.score(nextFrame)).isEqualTo(expectedScore);
+        assertThat(SPARE_FRAME.score(nextFrame, null)).isEqualTo(expectedScore);
     }
 
     @ParameterizedTest
@@ -72,7 +72,7 @@ class FrameTest {
     })
     void when_frame_is_a_strike_next_two_balls_are_counted(int nextFirstThrow, int nextSecondThrow, int expectedScore) {
         Frame nextFrame = buildFrame(nextFirstThrow, nextSecondThrow);
-        assertThat(STRIKE_FRAME.score(nextFrame)).isEqualTo(expectedScore);
+        assertThat(STRIKE_FRAME.score(nextFrame, null)).isEqualTo(expectedScore);
     }
 
     private Frame buildFrame(int firstThrow, int secondThrow) {

@@ -21,6 +21,10 @@ public class Frame {
         this.nbPinHitOnSecondThrow = nbPinHitOnSecondThrow;
     }
 
+    public static Frame gutterFrame() {
+        return new Frame(0, 0);
+    }
+
     public boolean isStrike() {
         return nbPinHitOnFirstThrow == NB_PINS;
     }
@@ -29,11 +33,14 @@ public class Frame {
         return !isStrike() && (sumTwoBalls(this) == NB_PINS);
     }
 
-    public int score(Frame nextFrame) {
+    public int score(Frame nextFrame, Frame secondNextFrame) {
         int scoreCurrentFrame = sumTwoBalls(this);
         if (isSpare()) {
             return scoreCurrentFrame + nextFrame.nbPinHitOnFirstThrow;
         } else if (isStrike()) {
+            if (nextFrame.isStrike()) {
+                return scoreCurrentFrame + sumTwoBalls(nextFrame) + secondNextFrame.nbPinHitOnFirstThrow;
+            }
             return scoreCurrentFrame + sumTwoBalls(nextFrame);
         }
         return scoreCurrentFrame;
